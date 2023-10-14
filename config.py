@@ -5,6 +5,8 @@ class Config():
     DEBUG = False
     TESTING = False
     
+class ProductionConfig(Config):
+    #Configuracion de producción para la base de datos    
     #DB_SERVER = env['MYSQL_HOST']
     #DB_NAME = env['MYSQL_NAME']
     #DB_USER = env['MYSQL_USER']
@@ -14,10 +16,7 @@ class Config():
     #@property
     #def DATABASE_URI(self):         # Note: all caps
     #    return 'mysql://{}@{}/{}'.format(self.DB_USER, self.DB_SERVER, self.DB_NAME)
-    
-class ProductionConfig(Config):
-    #Configuracion de producción para la base de datos
-    DB_SERVER = '192.168.19.32'
+    pass
 
 class DevelopmentConfig(Config):
     DB_SERVER='localhost'
@@ -25,12 +24,15 @@ class DevelopmentConfig(Config):
     
 class TestingConfig(Config):
     basedir = os.path.abspath(os.path.dirname(__file__))
-    
     DB_SERVER = 'localhost'
     DEBUG = True
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'src/databases/database.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
     
 config = {
-    'development': TestingConfig,
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'production': ProductionConfig,
 }

@@ -6,7 +6,7 @@ app = Flask(__name__)
 def init_app(config):
     # Configuración
     app.config.from_object(config)
-    
+        
     # Routes
     app.register_blueprint(IndexRoutes.main, url_prefix="/")
     
